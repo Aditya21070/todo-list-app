@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import { UserContext } from "./UserContext";
 
+// 1. Add the dynamic API base URL fallback block
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function TaskTableRow() {
     const userCtx = useContext(UserContext);
 
@@ -12,11 +15,11 @@ function TaskTableRow() {
 
     const taskDone = async (index) => {
         const task = userCtx.tasks[index];
-
         const taskId = task._id || task.id;
 
         try {
-            const response = await fetch(`/api/tasks/${taskId}`, {
+            // 2. Prepend API_BASE_URL to the PATCH endpoint
+            const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: 'Done' })
@@ -34,11 +37,11 @@ function TaskTableRow() {
 
     const taskDelete = async (index) => {
         const task = userCtx.tasks[index];
-
         const taskID = task.id || task._id;
 
         try {
-            const response = await fetch(`/api/tasks/${taskID}`, {
+            // 3. Prepend API_BASE_URL to the DELETE endpoint
+            const response = await fetch(`${API_BASE_URL}/api/tasks/${taskID}`, {
                 method:'DELETE'
             });
 
