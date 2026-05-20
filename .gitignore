@@ -1,0 +1,13 @@
+# dependencies
+Backend/node_modules
+Frontend/node_modules
+
+# env files
+Backend/.env
+Frontend/.env
+
+# logs
+npm-debug.log
+
+# system files
+.DS_Store
